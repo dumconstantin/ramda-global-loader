@@ -9,7 +9,9 @@ module.exports = function (source, map) {
 
   let fns = []
   let ramdaFn = Object.keys(R)
-  var ast = acorn.parse(source)
+  var ast = acorn.parse(source, {
+    sourceType: 'module'
+  })
 
   traverse(ast, {
     enter(node, parent) {
