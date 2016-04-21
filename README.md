@@ -2,6 +2,14 @@
 
 Start using RamdaJs functions right away without the ``` R. ``` namespace or worring about importing functions by hand.
 
+## Install:
+
+```bash
+$ npm install --save-dev ramda-global-loader
+```
+
+## Description:
+
 It extracts RamdaJs functions:
 ```javascript
 var add10 = add(10)
@@ -42,12 +50,6 @@ var answer = pipe(
 )
 
 answer(32) // The answer to your Ramda import problems
-```
-
-## Install:
-
-```bash
-$ npm install --save-dev ramda-global-loader
 ```
 
 ## Usage:
