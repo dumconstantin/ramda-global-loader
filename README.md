@@ -20,17 +20,25 @@ answer(32) // The answer to your Ramda import problems
 
 and automatically adds them to the header of every file:
 ```javascript
-import { add, pipe, ifElse, equals, always, substract } from 'ramda'
+var R = __webpack_require__(1)
+var add = R.add
+var pipe = R.pipe
+var ifElse = R.ifElse
+var equals = R.equals
+var always = R.always
+var subtract = R.subtract
+var __ = R.__
+
 
 var add10 = add(10)
 
 var answer = pipe(
-  add10,
-  ifElse(
-    equals(42),
-    always('The answer to your Ramda import problems'),
-    subtract(10)
-  )
+	add10,
+	ifElse(
+	  equals(42),
+	  always('The answer to your Ramda import problems'),
+	  subtract(__, 10)
+	)
 )
 
 answer(32) // The answer to your Ramda import problems
