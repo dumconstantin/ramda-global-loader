@@ -1,8 +1,8 @@
-# [Webpack](http://webpack.github.io/) RamdaJs loader that automatically imports functions
+# [Webpack](http://webpack.github.io/) + [RamdaJs](http://ramdajs.com/) loader that automatically imports functions
 
-Start using RamdaJs functions right away without worring about imports.
+Start using RamdaJs functions right away without the ``` R. ``` namespace or worring about importing functions by hand.
 
-It extracts the RamdaJs functions:
+It extracts RamdaJs functions:
 ```javascript
 var add10 = add(10)
 
@@ -18,7 +18,7 @@ var answer = pipe(
 answer(32) // The answer to your Ramda import problems
 ```
 
-and automatically adds them to the header of every file:
+and automatically adds them to the header of the file:
 ```javascript
 var R = __webpack_require__(1)
 var add = R.add
