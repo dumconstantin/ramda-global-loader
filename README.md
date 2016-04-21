@@ -6,15 +6,34 @@ It extracts the RamdaJs functions:
 ```javascript
 var add10 = add(10)
 
-pipe(add10, ifElse(equals(42), always('The answer to your import problems'), substract(10))
+var answer = pipe(
+  add10,
+  ifElse(
+    equals(42),
+    always('The answer to your Ramda import problems'),
+    subtract(10)
+  )
+)
+
+answer(32) // The answer to your Ramda import problems
 ```
 
 and automatically adds them to the header of every file:
 ```javascript
 import { add, pipe, ifElse, equals, always, substract } from 'ramda'
+
 var add10 = add(10)
 
-pipe(add10, ifElse(equals(42), always('The answer to your import problems'), substract(10))
+var answer = pipe(
+  add10,
+  ifElse(
+    equals(42),
+    always('The answer to your Ramda import problems'),
+    subtract(10)
+  )
+)
+
+answer(32) // The answer to your Ramda import problems
 ```
 
 ## Install:
