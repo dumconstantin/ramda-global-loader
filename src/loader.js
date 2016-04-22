@@ -3,22 +3,63 @@ import { traverse } from 'estraverse'
 import ast from 'ast'
 import * as acorn from 'acorn'
 
+function rowAt(text, charNo) {
+  let sub = text.substr(0, charNo)
+  let rows = sub.split('\n')
+  return rows.length
+}
+
+function charAt(text, charNo) {
+  let sub = text.substr(0, charNo)
+  return charNo - sub.lastIndexOf('\n')
+}
+
 module.exports = function (source, map) {
 
   this.cacheable()
 
+  let ast
+
+  try {
+    ast = acorn.parse(source, {
+      sourceType: 'module'
+    })
+  } catch (e) {
+    console.error('[ramda-global-loader]', e)
+    return source
+  }
+
   let fns = []
   let ramdaFn = Object.keys(R).filter(x => x !== 'default')
-  var ast = acorn.parse(source, {
-    sourceType: 'module'
-  })
+
+  let file = this.resourcePath
 
   traverse(ast, {
     enter(node, parent) {
       if (-1 !== ramdaFn.indexOf(node.name)) {
-        if (undefined === parent.object && 'FunctionDeclaration' !== parent.type && -1 === fns.indexOf(node.name)) {
-          fns.push(node.name)
+
+        if (
+          'VariableDeclarator' === parent.type
+          && parent.id.name === node.name
+        ) {
+
+          throw new Error(`
+
+    [ramda-global-loader]
+    Error: "${node.name}" is redeclared in ${file}:${rowAt(source, node.start)}:${charAt(source, node.start)}
+    RamdaJs functions shouldn't be redeclared if you want to use RamdaJs without the R. namespace.
+
+            `)
         }
+
+        if (
+          undefined === parent.object
+          && 'FunctionDeclaration' !== parent.type
+          && -1 === fns.indexOf(node.name)
+        ) {
+            fns.push(node.name)
+        }
+
       }
       return node
     }
