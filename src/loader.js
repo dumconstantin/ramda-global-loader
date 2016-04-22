@@ -16,7 +16,7 @@ module.exports = function (source, map) {
   traverse(ast, {
     enter(node, parent) {
       if (-1 !== ramdaFn.indexOf(node.name)) {
-        if (undefined === parent.object && 'FunctionDeclaration' !== parent.type) {
+        if (undefined === parent.object && 'FunctionDeclaration' !== parent.type && -1 === fns.indexOf(node.name)) {
           fns.push(node.name)
         }
       }

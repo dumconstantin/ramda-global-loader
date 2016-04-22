@@ -1,6 +1,6 @@
 {
   "name": "ramda-global-loader",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Webpack + RamdaJs. Automatically add RamdaJs functions to the header of each module",
   "main": "dist/loader.js",
   "scripts": {
