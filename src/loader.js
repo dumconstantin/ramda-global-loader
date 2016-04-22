@@ -8,7 +8,7 @@ module.exports = function (source, map) {
   this.cacheable()
 
   let fns = []
-  let ramdaFn = Object.keys(R)
+  let ramdaFn = Object.keys(R).filter(x => x !== 'default')
   var ast = acorn.parse(source, {
     sourceType: 'module'
   })
