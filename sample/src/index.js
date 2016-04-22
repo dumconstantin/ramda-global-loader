@@ -19,7 +19,7 @@ const _filter = curry((fn, stream) => stream.filter(fn))
 const flatMap = curry((fn, stream) => {
   return stream.flatMap(fn)
 })
-const ifErrPatch = curry((op, path, stream) => {
+const ifErrPatch = curry((op, tt, stream) => {
   return stream.mapErrors(err => {
     let newErr = {
       status: err.status,
@@ -27,26 +27,26 @@ const ifErrPatch = curry((op, path, stream) => {
       responseText: err.responseText,
       property: 'ajax'
     }
-    return createPatch(op, path, newErr)
+    return createPatch(op, tt, newErr)
   })
 })
 
-const patch = curry((op, path, value, stream) => {
+const patch = curry((op, tt, value, stream) => {
   return stream.flatMap(x => {
     if (true === value instanceof Kefir.Observable) {
       value = x
     }
-    return streamPatch(op, path, value, x)
+    return streamPatch(op, tt, value, x)
   })
 })
 
-const patchSelf = curry((op, path, stream) => {
-  return patch(op, path, stream, stream)
+const patchSelf = curry((op, tt, stream) => {
+  return patch(op, tt, stream, stream)
 })
 
-const streamPatch = curry((op, path, v1, v2) => {
+const streamPatch = curry((op, tt, v1, v2) => {
   return Kefir.stream(emitter => {
-    emitter.error(createPatch(op, path, v1))
+    emitter.error(createPatch(op, tt, v1))
     emitter.emit(v2)
   })
 })

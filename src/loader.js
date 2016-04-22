@@ -39,8 +39,9 @@ module.exports = function (source, map) {
       if (-1 !== ramdaFn.indexOf(node.name)) {
 
         if (
-          'VariableDeclarator' === parent.type
-          && parent.id.name === node.name
+          ('VariableDeclarator' === parent.type
+          && parent.id.name === node.name)
+          || 'ArrowFunctionExpression' === parent.type
         ) {
 
           throw new Error(`
